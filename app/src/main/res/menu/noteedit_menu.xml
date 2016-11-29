@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:title="Item"
+        app:showAsAction="always" />
+    <item android:id="@+id/menu_save"
+          android:icon="@drawable/btn_save"
+          android:alphabeticShortcut='s'
+          android:title="@string/save_menu_noteedit"
+          android:showAsAction="always" />    
+    <item android:id="@+id/menu_delete"
+          android:icon="@drawable/btn_delete"
+          android:alphabeticShortcut='d'
+          android:title="@string/delete_menu_noteedit"
+          android:showAsAction="always" />
+    <item android:id="@+id/action_share"
+        android:icon="@drawable/btn_share"
+        android:title="Share"
+        android:showAsAction="always" />
+    <item android:id="@+id/menu_about"
+    	  android:orderInCategory="100"
+          android:showAsAction="never"
+          android:title="@string/about"/>
+</menu>

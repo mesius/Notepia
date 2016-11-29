@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Notepia</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="about">About</string>
+    <string name="title">Title : </string>
+    <string name="menu_delete">Delete Item</string>
+    <string name="no_title">No Title</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="save_menu_noteedit">Save Note</string>
+    <string name="back_menu_noteedit">Back</string>
+    <string name="delete_menu_noteedit">Delete Note</string>
+    <string name="add_menu_noteslist">Add Note</string>
+
+
+    <string name="about_body">Notepia\n\t A simple and light notes application to take quick notes, reminders, etc.\n\t For more applications, bugs and feature requests you can visit: \n\thttp://www.topiasoft.com</string>
+
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="save_changes_dialog">Save changes?</string>
+    <string name="delete_note_dialog_title">Delete Note?</string>
+    <string name="delete_note_dialog_msg">Do you want to delete the current note?</string>
+    <string name="delete_note_dialog_button">Delete</string>
+    <string name="delete_note_cancel_button">Cancel</string>
+    <string name="toast_note_deleted">Note deleted</string>
+    <string name="toast_note_saved">Note saved</string>
+    <string name="share">Share</string>
+    <string name="share_via">Share via</string>
+</resources>
