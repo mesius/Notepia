@@ -3,6 +3,7 @@ package com.topiasoft.notepia;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
@@ -17,6 +18,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.database.Cursor;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class NotesList extends ListActivity {
 
@@ -29,6 +31,9 @@ public class NotesList extends ListActivity {
 
     private static final int DELETE_ID = Menu.FIRST;
     private int mNoteNumber = 1;
+
+    private boolean autoSave = false;
+    private static final String AUTO_SAVE_NOTE = "AUTO_SAVE_NOTE";
 
     private NotesDbAdapter mDbHelper;
 
@@ -57,6 +62,27 @@ public class NotesList extends ListActivity {
 				createNote();
 				}*/
 
+        /*Preferences*/
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+
+        //read
+        boolean defaultSaveValue = false;
+        autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultSaveValue);
+
+        //Show
+        Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
+
+
+        //write
+        autoSave = true;
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(AUTO_SAVE_NOTE,autoSave);
+        editor.apply();
+
+        //Show
+        Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
+
+        /*End Preferences*/
     }
 
     @Override
