@@ -18,6 +18,10 @@
         android:icon="@drawable/btn_share"
         android:title="Share"
         android:showAsAction="always" />
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/btn_share"
+        android:title="Settings"
+        android:showAsAction="ifRoom" />
     <item android:id="@+id/menu_about"
     	  android:orderInCategory="100"
           android:showAsAction="never"

@@ -107,7 +107,7 @@ public class NoteEdit extends Activity{
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         saveState();
-        outState.putSerializable(NotesDbAdapter.KEY_ROWID, mRowId);
+        //outState.putSerializable(NotesDbAdapter.KEY_ROWID, mRowId);
     }
 
     @Override
@@ -148,6 +148,7 @@ public class NoteEdit extends Activity{
                         public void onClick(DialogInterface dialog3, int which) {
                             dialog3.cancel();
                             saveState();
+                            showSaveMsg();
                             finish();
                         }
                     });
@@ -164,6 +165,7 @@ public class NoteEdit extends Activity{
                     finish();
                 }
                 changed = false;
+                //break;
                 return true;
             case R.id.menu_about:
 
@@ -181,6 +183,7 @@ public class NoteEdit extends Activity{
                     }
                 });
                 dialog.show();
+                //break;
                 return true;
             case R.id.menu_delete:
                 if(note != null){
@@ -217,17 +220,33 @@ public class NoteEdit extends Activity{
                     });
                     dialog2.show();
                 }
-
+                //break;
                 return true;
             case R.id.menu_save:
                 saveState();
+                showSaveMsg();
                 //changed = false;
                 //finish();
+                //break;
                 return true;
             case R.id.action_share:
                 //note.close();
                 //note = null;
                 shareIt();
+                //break;
+                return true;
+            case R.id.action_settings:
+                AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NoteEdit.this);
+                dialog_settings.setTitle("Settings");
+                dialog_settings.setMessage("Save auto?");
+                /*dialog_settings.setNegativeButton("OK", new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog_settings, int which) {
+                        dialog_settings.cancel();
+                        //finish();
+                } );*/
+                //dialog_settings.setMultiChoiceItems();
+                dialog_settings.show();
                 return true;
 	    	/*
 		    case R.id.menu_back:
@@ -238,6 +257,7 @@ public class NoteEdit extends Activity{
 	    		*/
             default:
                 return super.onOptionsItemSelected(item);
+                //return true;
         }
     }
 
@@ -288,8 +308,12 @@ public class NoteEdit extends Activity{
         curText = mBodyText.getText().toString();
         changed = false;
 
+    }
+
+    private void showSaveMsg()
+    {
         Context context = getApplicationContext();
-        CharSequence text = "Note saved";
+        CharSequence text = getText(R.string.toast_note_saved);
         int duration = Toast.LENGTH_SHORT;
 
         Toast toast = Toast.makeText(context, text, duration);
