@@ -3,6 +3,7 @@ package com.topiasoft.notepia;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -236,17 +237,27 @@ public class NoteEdit extends Activity{
                 //break;
                 return true;
             case R.id.action_settings:
-                AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NoteEdit.this);
+                final AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NoteEdit.this);
                 dialog_settings.setTitle("Settings");
-                dialog_settings.setMessage("Save auto?");
-                /*dialog_settings.setNegativeButton("OK", new DialogInterface.OnCancelListener() {
+                //dialog_settings.setMessage("Save auto?");
+
+                dialog_settings.setPositiveButton("ok", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog_settings, int which) {
+                    public void onClick(DialogInterface dialog_settings, int i) {
                         dialog_settings.cancel();
-                        //finish();
-                } );*/
-                //dialog_settings.setMultiChoiceItems();
+                    }
+                });
+
+
+                final CharSequence[] options = {"Si", "no"};
+                dialog_settings.setSingleChoiceItems(options, 0, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog_settings, int i) {
+                        Toast.makeText(getApplicationContext(), "Select "+ options[i], Toast.LENGTH_SHORT).show();
+                    }
+                });
                 dialog_settings.show();
+
                 return true;
 	    	/*
 		    case R.id.menu_back:
@@ -260,6 +271,8 @@ public class NoteEdit extends Activity{
                 //return true;
         }
     }
+
+
 
     private void shareIt() {
         //sharing implementation here
