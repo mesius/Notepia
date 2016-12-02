@@ -9,7 +9,9 @@
     <string name="save_menu_noteedit">Save Note</string>
     <string name="back_menu_noteedit">Back</string>
     <string name="delete_menu_noteedit">Delete Note</string>
+    <string name="settings_menu_notesedit">Settings</string>
     <string name="add_menu_noteslist">Add Note</string>
+
 
 
     <string name="about_body">Notepia\n\t A simple and light notes application to take quick notes, reminders, etc.\n\t For more applications, bugs and feature requests you can visit: \n\thttp://www.topiasoft.com</string>

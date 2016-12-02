@@ -2,7 +2,8 @@ package com.topiasoft.notepia;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.support.v7.widget.ActivityChooserView;
+//import android.support.v7.widget.ActivityChooserView;
+import android.app.Activity;
 import android.view.View;
 import android.widget.ShareActionProvider;
 
@@ -19,7 +20,7 @@ public class CustomShareActionProvider extends ShareActionProvider {
         super(context);
         mContext = context;
     }
-
+/*
     @Override
     public View onCreateActionView() {
         ActivityChooserView chooserView =
@@ -33,4 +34,5 @@ public class CustomShareActionProvider extends ShareActionProvider {
 
         return chooserView;
     }
+*/
 }
