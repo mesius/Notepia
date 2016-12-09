@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NotesList">
+        <activity android:name="com.topiasoft.notepia.NotesList">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,6 +20,10 @@
             android:name="com.topiasoft.notepia.NoteEdit"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustUnspecified"/>
+        <!-- Parent activity meta-data to support 4.0 and lower -->
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value="com.topiasoft.notepia.NotesList" />
     </application>
 
 </manifest>

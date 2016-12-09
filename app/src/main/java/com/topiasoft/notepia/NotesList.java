@@ -5,12 +5,16 @@ import android.app.ListActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-//import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ListAdapter;
 import android.widget.SimpleCursorAdapter;
 
 
@@ -20,7 +24,7 @@ import android.database.Cursor;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class NotesList extends ListActivity {
+public class NotesList extends AppCompatActivity {
 
     private ListView mlist;
 
@@ -41,17 +45,92 @@ public class NotesList extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.notelist);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        /*
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar2);
+        setSupportActionBar(myToolbar);
+        myToolbar.setLogo(R.mipmap.ic_launcher);
+        myToolbar.setTitle("Notepia");
+        myToolbar.setNavigationIcon(R.mipmap.ic_launcher);
+        */
+
+        //ActionBar myActionBar = getSupportActionBar();
+        //myActionBar.setIcon(R.drawable.btn_delete);
+        //myActionBar.setLogo(R.mipmap.ic_launcher);
+        //myActionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+
+
+
+        //mDbHelper = new NotesDbAdapter(getApplicationContext());
+
         mDbHelper = new NotesDbAdapter (this);
         mDbHelper.open();
 
-/*
-        mlist = (ListView) findViewById(R.id.);
+        mlist = (ListView) findViewById(R.id.myList);
+
+        /**********************/
+
+
+        Cursor notesCursor = mDbHelper.fetchAllNotes();
+        startManagingCursor(notesCursor);
+
+
+        String[] from = new String[] { NotesDbAdapter.KEY_TITLE ,NotesDbAdapter.KEY_DATE};
+        int[] to = new int[] { R.id.text1 ,R.id.date_row};
+
+        //Nos aseguramos de que existe al menos un registro
+        /*
+        if (notesCursor.moveToFirst()) {
+             //Recorremos el cursor hasta que no haya m�s registros
+             do {
+                  String codigo= notesCursor.getString(0);
+                  String nombre = notesCursor.getString(1);
+             } while(notesCursor.moveToNext());
+        }
+        */
+        // Now create an array adapter and set it to display using our row
+        SimpleCursorAdapter notes =
+                new SimpleCursorAdapter(this, R.layout.notes_row, notesCursor, from, to);
+
+/****
+        Cursor cursor = mySQLiteAdapter.queueAll();
+        startManagingCursor(cursor);
+
+        String[] from = new String[]{SQLiteAdapter.KEY_CONTENT};
+        int[] to = new int[]{R.id.text};
+
+        SimpleCursorAdapter cursorAdapter =
+                new SimpleCursorAdapter(this, R.layout.row, cursor, from, to);
+
+        listContent.setAdapter(cursorAdapter);
+
+***/
+
+        /**********************/
 
         if (mlist != null){
-            mlist.setAdapter(mDbHelper);
+            mlist.setAdapter(notes);
         }
-*/
-        fillData();
+
+        mlist.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Cursor cursor = (Cursor) mlist.getItemAtPosition(i);
+                int item_id = cursor.getInt(cursor.getColumnIndex(NotesDbAdapter.KEY_ROWID));
+                //Toast.makeText(getApplicationContext(),String.valueOf(item_id), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), NoteEdit.class);
+                intent.putExtra(NotesDbAdapter.KEY_ROWID, l);
+                //startActivityForResult(i, ACTIVITY_EDIT);
+                //startActivityForResult(i, ACTIVITY_EDIT);
+                startActivity(intent);
+            }
+        });
+
+        //fillData();
+
         //registerForContextMenu(getListView());
 
 		/*
@@ -125,6 +204,8 @@ public class NotesList extends ListActivity {
 
 
 
+
+/*
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -133,7 +214,7 @@ public class NotesList extends ListActivity {
         //startActivityForResult(i, ACTIVITY_EDIT);
         //startActivityForResult(i, ACTIVITY_EDIT);
         startActivity(i);
-    }
+    }*/
 
 	private void fillData() {
         // Get all of the notes from the database and create the item list
@@ -158,7 +239,7 @@ public class NotesList extends ListActivity {
         SimpleCursorAdapter notes =
                 new SimpleCursorAdapter(this, R.layout.notes_row, notesCursor, from, to);
 
-        setListAdapter(notes);
+        //setAdapter(notes);
 
     }
 

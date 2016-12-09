@@ -9,6 +9,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -28,7 +31,7 @@ import java.util.Date;
  * Created by fm on 14/11/2016.
  */
 
-public class NoteEdit extends Activity{
+public class NoteEdit extends AppCompatActivity{
 
     public static int numTitle = 1;
     public static String curDate = "";
@@ -48,13 +51,36 @@ public class NoteEdit extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.note_edit);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        setTitle(R.string.app_name);
+
+
+        /*
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(myToolbar);
+
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setLogo(R.mipmap.ic_launcher);
+        */
+
+        //ActionBar myActionBar = getSupportActionBar();
+        //myActionBar.setIcon(R.mipmap.ic_launcher);
+        //myActionBar.setLogo(R.drawable.btn_delete);
+
+
         mDbHelper = new NotesDbAdapter(this);
         mDbHelper.open();
 
 
 
-        setContentView(R.layout.note_edit);
-        setTitle(R.string.app_name);
         //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         //mTitleText = (EditText) findViewById(R.id.title);
