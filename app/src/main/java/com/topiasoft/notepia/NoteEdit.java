@@ -57,6 +57,12 @@ public class NoteEdit extends AppCompatActivity{
         setSupportActionBar(toolbar);
 
         setTitle(R.string.app_name);
+        // Get a support ActionBar corresponding to this toolbar
+        ActionBar ab = getSupportActionBar();
+
+        // Enable the Up button
+        ab.setDisplayHomeAsUpEnabled(true);
+
 
 
         /*

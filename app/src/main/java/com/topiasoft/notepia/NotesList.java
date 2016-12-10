@@ -44,9 +44,11 @@ public class NotesList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /*TODO Listview en un contenedor relative*/
         setContentView(R.layout.notelist);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar1);
         setSupportActionBar(toolbar);
 
         /*
@@ -60,7 +62,8 @@ public class NotesList extends AppCompatActivity {
         //ActionBar myActionBar = getSupportActionBar();
         //myActionBar.setIcon(R.drawable.btn_delete);
         //myActionBar.setLogo(R.mipmap.ic_launcher);
-        //myActionBar.setHomeAsUpIndicator(R.mipmap.ic_launcher);
+        setTitle(R.string.app_name);
+
 
 
 
