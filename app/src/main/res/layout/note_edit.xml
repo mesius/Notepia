@@ -9,8 +9,8 @@
 	    android:id="@+id/toplayout"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:paddingBottom="5dp"
-	    android:paddingTop="5dp" >
+	    android:paddingBottom="1dp"
+		android:background="@android:color/background_light">
 
 
 
@@ -19,42 +19,58 @@
 				android:id="@+id/toolbar"
 				android:layout_width="match_parent"
 				android:layout_height="?attr/actionBarSize"
-				android:background="?attr/colorPrimary" />
+				android:background="@drawable/bg"
+				android:paddingBottom="1dp"
+				app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
 
 
-		<TextView
-		    android:id="@+id/notelist_date"
-		    android:layout_width="wrap_content"
-		    android:layout_height="wrap_content"
-		    android:layout_alignParentRight="true"
-		    android:paddingRight="10dp"
-		    android:textColor="#CCCCCC"
-		    android:textSize="12sp"
-		    android:textStyle="normal" />
+
 		
 	</RelativeLayout>
 
-	<com.topiasoft.notepia.ExtendedEditText
-		android:id="@+id/body"
+
+
+	<LinearLayout
+		android:orientation="vertical"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_below="@+id/toplayout"
-		android:autoLink="web|email|phone"
-		android:background="@android:color/transparent"
-		android:fadingEdge="vertical"
-		android:gravity="top"
-		android:inputType="textMultiLine|textNoSuggestions|textCapSentences"
-		android:lineSpacingExtra="6dp"
-		android:linksClickable="true"
-		android:padding="10dp"
-		android:scrollbars="vertical"
-		android:textColor="#FFFFFF"
-		android:textSize="14sp"
-		android:textStyle="normal"
-		android:typeface="normal" />
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="1dp"
+		android:gravity="bottom|right">
 
-	    
+		<TextView
+			android:id="@+id/notelist_date"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="top"
+			android:padding="10dp"
+			android:textColor="#CCCCCC"
+			android:textSize="12sp"
+			android:textStyle="normal" />
+
+		<com.topiasoft.notepia.ExtendedEditText
+			android:id="@+id/body"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:layout_below="@+id/toplayout"
+			android:autoLink="web|email|phone"
+			android:background="@android:color/transparent"
+			android:fadingEdge="vertical"
+			android:gravity="top"
+			android:inputType="textMultiLine|textNoSuggestions|textCapSentences"
+			android:lineSpacingExtra="6dp"
+			android:linksClickable="true"
+			android:padding="10dp"
+			android:scrollbars="vertical"
+			android:textColor="#FFFFFF"
+			android:textSize="14sp"
+			android:textStyle="normal"
+			android:typeface="normal" />
+
+	</LinearLayout>
+
 
 </RelativeLayout>
