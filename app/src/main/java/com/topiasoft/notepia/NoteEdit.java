@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
@@ -41,6 +42,11 @@ public class NoteEdit extends AppCompatActivity{
     private EditText mBodyText;
     private TextView mDateText;
     private Long mRowId;
+    private boolean autoSave = false;
+    private static final String AUTO_SAVE_NOTE = "AUTO_SAVE_NOTE";
+
+    /*Preferences*/
+    SharedPreferences sharedPreferences;
 
     private Cursor note;
 
@@ -81,6 +87,8 @@ public class NoteEdit extends AppCompatActivity{
         //myActionBar.setIcon(R.mipmap.ic_launcher);
         //myActionBar.setLogo(R.drawable.btn_delete);
 
+
+        sharedPreferences = getSharedPreferences(AUTO_SAVE_NOTE, Context.MODE_PRIVATE);
 
         mDbHelper = new NotesDbAdapter(this);
         mDbHelper.open();
@@ -166,34 +174,49 @@ public class NoteEdit extends AppCompatActivity{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         //AlertDialog.Builder dialog = new AlertDialog.Builder(NoteEdit.this);
+
+
         newText = mBodyText.getText().toString();
         if (!newText.equals(curText)) changed = true;
         switch (item.getItemId()) {
             case android.R.id.home:
                 if (changed) {
-                    AlertDialog.Builder dialog3 = new AlertDialog.Builder(NoteEdit.this);
-                    dialog3.setTitle("Back");
-                    dialog3.setMessage("Save Changes?"
-                    );
-                    dialog3.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    //boolean defaultValue = false;
+                    //final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
+                    boolean defaultValuex = false;
+                    final boolean autoSavex = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValuex);
 
-                        @Override
-                        public void onClick(DialogInterface dialog3, int which) {
-                            dialog3.cancel();
-                            saveState();
-                            showSaveMsg();
-                            finish();
-                        }
-                    });
-                    dialog3.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog3, int which) {
-                            dialog3.cancel();
-                            finish();
-                        }
-                    });
-                    dialog3.show();
-                    //finish();
+                    if (autoSavex){
+                        saveState();
+                        showSaveMsg();
+                        finish();
+                    } else {
+                        AlertDialog.Builder dialog3 = new AlertDialog.Builder(NoteEdit.this);
+                        dialog3.setTitle("Back");
+                        dialog3.setMessage("Save Changes?"
+                        );
+                        dialog3.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog3, int which) {
+                                dialog3.cancel();
+                                saveState();
+                                showSaveMsg();
+                                finish();
+                            }
+                        });
+                        dialog3.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog3, int which) {
+                                dialog3.cancel();
+                                finish();
+                            }
+                        });
+                        dialog3.show();
+                        //finish();
+
+                    }
+
                 } else {
                     finish();
                 }
@@ -270,7 +293,9 @@ public class NoteEdit extends AppCompatActivity{
                 return true;
             case R.id.action_settings:
                 final AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NoteEdit.this);
-                dialog_settings.setTitle("Settings");
+                boolean defaultValue = false;
+                final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
+                dialog_settings.setTitle("Auto save note? - " + String.valueOf(autoSave));
                 //dialog_settings.setMessage("Save auto?");
 
                 dialog_settings.setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -280,12 +305,19 @@ public class NoteEdit extends AppCompatActivity{
                     }
                 });
 
-
+                int tempSel;
+                if (autoSave) {tempSel = 0;} else { tempSel = 1;}
                 final CharSequence[] options = {"Si", "no"};
-                dialog_settings.setSingleChoiceItems(options, 0, new DialogInterface.OnClickListener() {
+                dialog_settings.setSingleChoiceItems(options, tempSel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog_settings, int i) {
-                        Toast.makeText(getApplicationContext(), "Select "+ options[i], Toast.LENGTH_SHORT).show();
+                        boolean tempB;
+                        if (i==0) {tempB = true;} else { tempB = false;}
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putBoolean(AUTO_SAVE_NOTE,tempB);
+                        editor.commit();
+                        //Toast.makeText(getApplicationContext(), "Auto Save: "+ String.valueOf(tempB), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Auto Save: "+ options[i], Toast.LENGTH_SHORT).show();
                     }
                 });
                 dialog_settings.show();

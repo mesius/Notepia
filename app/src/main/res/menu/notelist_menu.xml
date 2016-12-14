@@ -11,4 +11,8 @@
         android:title="@string/add_menu_noteslist"
         app:showAsAction="always"
         android:icon="@drawable/btn_new" />
+    <item android:id="@+id/action_settings"
+        android:icon="@drawable/btn_settings"
+        android:title="@string/settings_menu_notesedit"
+        app:showAsAction="ifRoom" />
 </menu>

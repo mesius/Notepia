@@ -2,6 +2,7 @@ package com.topiasoft.notepia;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -36,10 +37,18 @@ public class NotesList extends AppCompatActivity {
     private static final int DELETE_ID = Menu.FIRST;
     private int mNoteNumber = 1;
 
-    private boolean autoSave = false;
-    private static final String AUTO_SAVE_NOTE = "AUTO_SAVE_NOTE";
+
+
+    public static final String AUTO_SAVE_NOTE = "AUTO_SAVE_NOTE";
+    public boolean autoSave = false;
+
+    SharedPreferences sharedPreferences;
 
     private NotesDbAdapter mDbHelper;
+
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +82,9 @@ public class NotesList extends AppCompatActivity {
         mDbHelper.open();
 
         mlist = (ListView) findViewById(R.id.myList);
+
+
+        sharedPreferences = getSharedPreferences(AUTO_SAVE_NOTE, Context.MODE_PRIVATE);
 
         /**********************/
 
@@ -144,7 +156,7 @@ public class NotesList extends AppCompatActivity {
 				createNote();
 				}*/
 
-        /*Preferences*/
+        /***Preferences
         SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
 
         //read
@@ -152,19 +164,20 @@ public class NotesList extends AppCompatActivity {
         autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultSaveValue);
 
         //Show
-        Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
 
 
         //write
+
         autoSave = true;
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putBoolean(AUTO_SAVE_NOTE,autoSave);
         editor.apply();
 
         //Show
-        Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this,String.valueOf(autoSave), Toast.LENGTH_SHORT).show();
 
-        /*End Preferences*/
+        End Preferences***/
     }
 
     @Override
@@ -195,6 +208,41 @@ public class NotesList extends AppCompatActivity {
 	           return true;
 	    case R.id.menu_add:
 	    	createNote();
+            return true;
+
+        case R.id.action_settings:
+            final AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NotesList.this);
+            boolean defaultValue = false;
+            final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
+            dialog_settings.setTitle("Auto save note? - " + String.valueOf(autoSave));
+            //dialog_settings.setMessage("Save auto?");
+
+            dialog_settings.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog_settings, int i) {
+                    dialog_settings.cancel();
+                }
+            });
+
+            int tempSel;
+            if (autoSave) {tempSel = 0;} else { tempSel = 1;}
+            final CharSequence[] options = {"Yes", "No"};
+            dialog_settings.setSingleChoiceItems(options, tempSel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog_settings, int i) {
+                    boolean tempB;
+                    if (i==0) {tempB = true;} else { tempB = false;}
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(AUTO_SAVE_NOTE,tempB);
+                    editor.commit();
+                    //Toast.makeText(getApplicationContext(), "Auto Save: "+ String.valueOf(tempB), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Auto Save: "+ options[i], Toast.LENGTH_SHORT).show();
+                }
+            });
+            dialog_settings.show();
+
+            return true;
+
 	    default:
 	           return super.onOptionsItemSelected(item);
 	    }
