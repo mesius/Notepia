@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -58,15 +59,15 @@
 			android:layout_below="@+id/toplayout"
 			android:autoLink="web|email|phone"
 			android:background="@android:color/transparent"
-			android:fadingEdge="vertical"
 			android:gravity="top"
-			android:inputType="textMultiLine|textNoSuggestions|textCapSentences"
-			android:lineSpacingExtra="6dp"
+			android:inputType="text|textCapSentences|textMultiLine|textImeMultiLine|textNoSuggestions"
+
 			android:linksClickable="true"
 			android:padding="10dp"
 			android:scrollbars="vertical"
 			android:textColor="#FFFFFF"
-			android:textSize="14sp"
+			android:textSize="18sp"
+
 			android:textStyle="normal"
 			android:typeface="normal" />
 

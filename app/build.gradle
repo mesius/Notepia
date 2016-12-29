@@ -16,13 +16,13 @@ android {
         minSdkVersion 15
         targetSdkVersion 25
         versionCode 5
-        versionName '1.0.3'
+        versionName '1.0.4'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.config
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }

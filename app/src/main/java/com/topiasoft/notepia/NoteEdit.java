@@ -17,6 +17,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -71,6 +72,23 @@ public class NoteEdit extends AppCompatActivity{
 
 
 
+        /*mBodyText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });*/
+
         /*
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
@@ -120,25 +138,6 @@ public class NoteEdit extends AppCompatActivity{
         }
 
         populateFields();
-
-
-        mBodyText.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-
-            }
-
-            public void beforeTextChanged(CharSequence s, int start,
-                                          int count, int after) {
-
-            }
-
-            public void onTextChanged(CharSequence s, int start,
-                                      int before, int count) {
-                //newText = mBodyText.getText().toString();
-            }
-        });
-        //if (!newText.equals(curText)) changed = true;
 
     }
 
@@ -295,10 +294,10 @@ public class NoteEdit extends AppCompatActivity{
                 final AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NoteEdit.this);
                 boolean defaultValue = false;
                 final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
-                dialog_settings.setTitle("Auto save note? - " + String.valueOf(autoSave));
+                dialog_settings.setTitle("Auto save note?");
                 //dialog_settings.setMessage("Save auto?");
 
-                dialog_settings.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                dialog_settings.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog_settings, int i) {
                         dialog_settings.cancel();
@@ -307,7 +306,7 @@ public class NoteEdit extends AppCompatActivity{
 
                 int tempSel;
                 if (autoSave) {tempSel = 0;} else { tempSel = 1;}
-                final CharSequence[] options = {"Si", "no"};
+                final CharSequence[] options = {"Si", "No"};
                 dialog_settings.setSingleChoiceItems(options, tempSel, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog_settings, int i) {
@@ -407,13 +406,69 @@ public class NoteEdit extends AppCompatActivity{
 	            mTitleText.setText(note.getString(
 	    	            note.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE)));
 	    	    */
-            mBodyText.setText(note.getString(
-                    note.getColumnIndexOrThrow(NotesDbAdapter.KEY_BODY)));
+            String tmptext;
+            tmptext = note.getString(note.getColumnIndexOrThrow(NotesDbAdapter.KEY_BODY));
+            tmptext = tmptext.substring(0, tmptext.length());
+            mBodyText.setText(tmptext);
             curText = mBodyText.getText().toString();
+            mBodyText.setSelection(mBodyText.getText().length());
             changed = false;
 	            /*curText = note.getString(
 	                    note.getColumnIndexOrThrow(NotesDbAdapter.KEY_BODY));*/
         }
     }
+
+
+    @Override
+    public void onBackPressed() {
+        newText = mBodyText.getText().toString();
+        if (!newText.equals(curText)) changed = true;
+        if (changed) {
+            //boolean defaultValue = false;
+            //final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
+            boolean defaultValuex = false;
+            final boolean autoSavex = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValuex);
+
+            if (autoSavex){
+                saveState();
+                showSaveMsg();
+                finish();
+            } else {
+                AlertDialog.Builder dialog3 = new AlertDialog.Builder(NoteEdit.this);
+                dialog3.setTitle("Back");
+                dialog3.setMessage("Save Changes?"
+                );
+                dialog3.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog3, int which) {
+                        dialog3.cancel();
+                        saveState();
+                        showSaveMsg();
+                        finish();
+                    }
+                });
+                dialog3.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog3, int which) {
+                        dialog3.cancel();
+                        finish();
+                    }
+                });
+                dialog3.show();
+                //finish();
+
+            }
+
+        } else {
+            //Toast toast = Toast.makeText(getApplicationContext(),"Back!", Toast.LENGTH_SHORT);
+            //toast.show();
+            finish();
+        }
+
+
+        //super.onBackPressed();
+    }
+
 
 }

@@ -214,7 +214,7 @@ public class NotesList extends AppCompatActivity {
             final AlertDialog.Builder dialog_settings = new AlertDialog.Builder(NotesList.this);
             boolean defaultValue = false;
             final boolean autoSave = sharedPreferences.getBoolean(AUTO_SAVE_NOTE,defaultValue);
-            dialog_settings.setTitle("Auto save note? - " + String.valueOf(autoSave));
+            dialog_settings.setTitle("Auto save note?");
             //dialog_settings.setMessage("Save auto?");
 
             dialog_settings.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
