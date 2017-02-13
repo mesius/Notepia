@@ -30,6 +30,9 @@ public class ExtendedEditText extends EditText {
     private Rect mRect;
     private Paint mPaint;
 
+    private Rect rect;
+    private Paint paint;
+
     public ExtendedEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
@@ -65,6 +68,7 @@ public class ExtendedEditText extends EditText {
     private void inicialization()
     {
 
+        /*
         setLineSpacing(10,1);
         mRect = new Rect();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -73,6 +77,8 @@ public class ExtendedEditText extends EditText {
         // define the color of line
         mPaint.setColor(Color.parseColor("#CCCCCC"));
         //mPaint.setTextSize(30);
+        */
+
 
         /*
         setLineSpacing(10,1);
@@ -90,9 +96,18 @@ public class ExtendedEditText extends EditText {
         p2.setColor(Color.YELLOW);
         p2.setTextSize(20);
 */
-        r = new Rect();
+        //r = new Rect();
+
 
         //escala = getResources().getDisplayMetrics().density;
+
+        //setLineSpacing(10,1);
+        rect = new Rect();
+        paint = new Paint();
+        paint.setStyle(Paint.Style.FILL_AND_STROKE);
+        //paint.setColor(Color.parseColor(context.getString((R.color.lined_edit_line))));
+        paint.setColor(Color.parseColor("#CCCCCC"));
+
     }
 
     @Override
@@ -100,7 +115,7 @@ public class ExtendedEditText extends EditText {
         //Llamamos al metodo de la clase base (EditText)
         //super.onDraw(canvas);
         //setLineSpacing(20,1);
-
+/*
         int height = getHeight();
         int line_height = getLineHeight();
 
@@ -122,7 +137,23 @@ public class ExtendedEditText extends EditText {
             // next line
             baseline += getLineHeight();
         }
+*/
+        int height = getHeight();
+        int line_height = getLineHeight();
 
+        int count = height / line_height;
+
+        if (getLineCount() > count) {
+            count = getLineCount();
+        }
+
+        int baseline = getLineBounds(0, rect);
+
+        for (int i = 0; i < count; i++) {
+
+            canvas.drawLine(rect.left, baseline + 1, rect.right, baseline + 1, paint);
+            baseline += getLineHeight();
+        }
 
 /*
         int baseline = getLineBounds(0, r);

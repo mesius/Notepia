@@ -71,6 +71,23 @@
 			android:textStyle="normal"
 			android:typeface="normal" />
 
+		<!--<com.topiasoft.notepia.ExtendedEditText
+			android:id="@+id/body"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:layout_marginTop="5dp"
+			android:layout_marginBottom="10dp"
+			android:padding="5dp"
+			android:scrollbars="vertical"
+			android:fadingEdge="vertical"
+			android:gravity="top"
+			android:background="@android:color/transparent"
+			android:textSize="18.0sp"
+			android:textColor="#FFFFFF"
+			android:inputType="text|textCapSentences|textMultiLine|textImeMultiLine|textNoSuggestions"
+			android:autoLink="none"
+			/>-->
+
 	</LinearLayout>
 
 

@@ -1,14 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'aliastt3'
-            keyPassword 'gato1234'
-            storeFile file('C:/Users/fm/Documents/android/keystore/clavett3.keystore')
-            storePassword 'gato1234'
-        }
-    }
+
     compileSdkVersion 25
     buildToolsVersion "25.0.0"
     defaultConfig {
@@ -18,11 +11,11 @@ android {
         versionCode 5
         versionName '1.0.4'
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.config
+
     }
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
